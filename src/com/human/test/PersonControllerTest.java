@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.human.controller.PersonDelete;
 import com.human.controller.PersonExecute;
 import com.human.controller.PersonInsert;
+import com.human.controller.PersonSelect;
 import com.human.controller.PersonUpdate;
 import com.human.dto.PersonDto;
 
@@ -19,7 +20,7 @@ public class PersonControllerTest {
 //		
 //		pu.execute(request, response);
 
-		int select=2;
+		int select=3;
 		PersonExecute pe=null;
 		
 //		Object request=new PersonDto();
@@ -37,6 +38,10 @@ public class PersonControllerTest {
 			break;
 		case 2:
 			pe=new PersonDelete();
+			break;
+		case 3:
+			pe=new PersonSelect();
+			break;
 		default:
 			break;
 		}

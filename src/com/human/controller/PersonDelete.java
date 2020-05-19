@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.human.dao.PersonDao;
 import com.human.dto.PersonDto;
 import com.human.util.DBConn;
+import com.human.util.Request;
+import com.human.util.Response;
 
 public class PersonDelete implements PersonExecute {
 
@@ -13,13 +15,13 @@ public class PersonDelete implements PersonExecute {
 		PersonDto request=new PersonDto();
 		ArrayList<Integer> response=new ArrayList<Integer>();
 		
-		inputView(request, response);
-		logic(request, response);
-		outputView(request, response);
+//		inputView(request, response);
+//		logic(request, response);
+//		outputView(request, response);
 	}
 
 	@Override
-	public void execute(Object request, Object response) {
+	public void execute(Request request, Response response) {
 		inputView(request, response);
 		logic(request, response);
 		outputView(request, response);
@@ -27,30 +29,31 @@ public class PersonDelete implements PersonExecute {
 	}
 
 	@Override
-	public void inputView(Object request, Object response) {
-		System.out.println("변경할 회원 번호와 이름을 입력하세요");
+	public void inputView(Request request, Response response) {
+		System.out.println("삭제할 회원 번호를 입력하세요");
 		System.out.println("no 입력");
 		int no=DBConn.inputInt();
-		
-		PersonDto dto=(PersonDto) request;
+		PersonDto dto=new PersonDto();
 		dto.setNo(no);
+		request.setPersonDto(dto);
 	}
 
 	@Override
-	public void logic(Object request, Object response) {
-		PersonDto dto=(PersonDto) request;
+	public void logic(Request request, Response response) {
+		PersonDto dto=request.getPersonDto();
 		//insert
 		PersonDao dao=new PersonDao();
 		int i=dao.delete(dto.getNo());
-		((ArrayList<Integer>)response).add(new Integer(i));
-
+		//((ArrayList<Integer>)response).add(new Integer(i));
+		response.setResultValue(i);
 	}
 
 	@Override
-	public void outputView(Object request, Object response) {
-		System.out.println(((PersonDto)request).getNo()
+	public void outputView(Request request, Response response) {
+		PersonDto req=request.getPersonDto();
+		System.out.println(req.getNo()
 				+"번 데이터를 "
-				+((ArrayList<Integer>)response).get(0)+"개 삭제하였습니다.");
+				+response.getResultValue()+"개 삭제하였습니다.");
 
 	}
 
